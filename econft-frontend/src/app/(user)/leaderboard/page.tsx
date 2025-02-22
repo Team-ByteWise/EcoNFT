@@ -82,23 +82,23 @@ export default function Leaderboard() {
             Tree Planting Leaderboard
           </h1>
         </div>
-        <Table className="">
+        <Table className="w-full table-fixed">
           <TableHeader className="text-green-900">
             <TableRow>
-              <TableHead className="w-[100px]">Rank</TableHead>
-              <TableHead>Username</TableHead>
+              <TableHead className="w-1/3 text-center">Rank</TableHead>
+              <TableHead className="w-1/3 text-center">Username</TableHead>
               {/* <TableHead>Tree Variant</TableHead>
               <TableHead>Price of NFT</TableHead> */}
-              <TableHead>Total Trees Planted</TableHead>
+              <TableHead className="w-1/3 text-center">Total Trees Planted</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((user) => (
               <TableRow
                 key={user.rank}
-                className={user.rank <= 3 ? "bg-green-50 text-green-500" : "text-green-500"}
+                className={user.rank <= 3 ? "bg-green-50 text-green-500 text-center " : "text-green-500 text-center "}
               >
-                <TableCell className="font-medium ">
+                <TableCell className="font-medium  text-center flex items-center justify-center">
                   <div className="flex items-center gap-2 ">
                     {getRankIcon(user.rank)}
                     {user.rank}
@@ -107,7 +107,7 @@ export default function Leaderboard() {
                 <TableCell>
                   <button
                     // onClick={() => setSelectedUser(user)}
-                    className="text-green-600 hover:text-green-800 font-medium"
+                    className="text-green-600 hover:text-green-800 font-medium text-center"
                   >
                     {user.username}
                   </button>
