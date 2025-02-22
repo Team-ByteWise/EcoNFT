@@ -1,61 +1,57 @@
-"use client"; // ✅ Convert to Client Component
+"use client";
 
-import { Award, Leaf, Trees } from "lucide-react";
+import { useUser } from "@/app/context/AuthContext";
+import { BASE_URL } from "@/lib/constant";
+import { Award, Trees } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const trees = [
-    {
-      id: 1,
-      name: "Oak Tree",
-      location: "Central Park, NY",
-      date: "2025-02-15",
-      status: "Minted",
-      image:
-        "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=300",
-    },
-    {
-      id: 2,
-      name: "Maple Tree",
-      location: "Golden Gate Park, SF",
-      date: "2025-02-14",
-      status: "Pending",
-      image:
-        "https://images.unsplash.com/photo-1588392382834-a891154bca4d?auto=format&fit=crop&q=80&w=300",
-    },
-    {
-      id: 3,
-      name: "Maple Tree",
-      location: "Golden Gate Park, SF",
-      date: "2025-02-14",
-      status: "Pending",
-      image:
-        "https://images.unsplash.com/photo-1588392382834-a891154bca4d?auto=format&fit=crop&q=80&w=300",
-    },
-    {
-      id: 4,
-      name: "Maple Tree",
-      location: "Golden Gate Park, SF",
-      date: "2025-02-14",
-      status: "Pending",
-      image:
-        "https://images.unsplash.com/photo-1588392382834-a891154bca4d?auto=format&fit=crop&q=80&w=300",
-    },
-    
-  ];
+  const { username, authToken } = useUser();
+  const [trees, setTrees] = useState<any[]>([]);
+
+  useEffect(() => {
+    const getTrees = async () => {
+      const res = await fetch(`${BASE_URL}/nft/my-nfts`, {
+        headers: {
+          "Authorization": `Bearer ${authToken}`
+        }
+      });
+      const data = await res.json();
+      if (data.success) {
+        const { nfts } = data;
+        const arrayOfNfts = [];
+        for (const nft of nfts) {
+            const nftObject = {
+              name: nft[0],
+              scientificName: nft[1],
+              imageUrl: nft[2],
+              uuid: nft[3],
+              latitude: parseFloat(nft[4]) / 1e6,
+              longitude: parseFloat(nft[5]) / 1e6
+            }
+
+            arrayOfNfts.push(nftObject);
+        }
+
+        setTrees(arrayOfNfts);
+      }
+    };
+    getTrees();
+  }, [authToken]);
+
   return (
     <div className="min-w-full h-screen bg-green-950/30 py-8">
-      <div className="max-w-7xl mx-auto ">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-8 mx-4">
           <h1 className="text-2xl font-bold  text-green-500 ">
             {/*user goes here*/}
-            Welcome back, USER!
+            Welcome back, {username}!
           </h1>{" "}
           <p className="text-gray-600">Here's your tree planting journey</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mx-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mx-4">
           <div className="card bg-green-100 p-6 rounded-xl ">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-transparent rounded-lg">
@@ -64,17 +60,6 @@ export default function Dashboard() {
               <div>
                 <div className="text-2xl font-bold text-gray-900">5</div>
                 <div className="text-sm text-gray-600">Trees Planted</div>
-              </div>
-            </div>
-          </div>
-          <div className="card bg-green-100 p-6 rounded-xl ">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-transparent rounded-lg">
-                <Leaf className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-gray-900">3</div>
-                <div className="text-sm text-gray-600">NFTs Minted</div>
               </div>
             </div>
           </div>
@@ -102,25 +87,16 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-4">
           {trees.map((tree) => (
-            <div key={tree.id} className="card">
+            <div key={tree.uuid} className="card">
               <img
-                src={tree.image}
+                src={tree.imageUrl}
                 alt={tree.name}
                 className="w-full h-48 object-cover rounded-lg mb-4"
               />
               <h3 className="font-semibold text-green-500">{tree.name}</h3>
-              <p className="text-sm text-gray-600 mb-2">{tree.location}</p>
+              <p className="text-sm text-gray-600 mb-2">{tree.latitude}, {tree.longitude}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500">{tree.date}</span>
-                <span
-                  className={`text-sm font-medium ${
-                    tree.status === "Minted"
-                      ? "text-green-600"
-                      : "text-yellow-600"
-                  }`}
-                >
-                  {tree.status}
-                </span>
               </div>
             </div>
           ))}

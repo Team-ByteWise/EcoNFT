@@ -2,9 +2,13 @@ import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { ethers } from "ethers";
 import dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
+import { authenticate } from "../middlewares/auth";
 
 dotenv.config();
 const router = express.Router();
+const prisma = new PrismaClient();
+
 const SECRET_KEY = process.env.JWT_SECRET || "supersecret";
 
 // Store nonces in memory (Use DB for production)
@@ -43,9 +47,23 @@ router.post("/verify-signature", async (req: Request, res: Response) => {
     return; 
   }
 
-  const token = jwt.sign({ address }, SECRET_KEY, { expiresIn: "1h" });
+  let user = await prisma.user.findUnique({ where: { wallet: address } })
+  if (!user) {
+    user = await prisma.user.create({ data: { wallet: address, username: address } });
+  }
+
+  const token = jwt.sign({ id: user.id, wallet: user.wallet, username: user.username }, SECRET_KEY, { expiresIn: "7d" });
   delete nonces[address]; // Remove used nonce
   res.json({ token });
 });
+
+router.get("/verify", authenticate, async (req: Request, res: Response) => {
+  try {
+    const { id, wallet, username } = req.body.user;
+    res.json({ id, wallet, username });
+  } catch (error: any) {
+    res.status(401).json({ error: error.message });
+  }
+})
 
 export default router;
