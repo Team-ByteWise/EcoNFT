@@ -32,12 +32,11 @@ export default function Home() {
     <div className="">
       {/* Hero Section */}
       <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-radial from-green-100/50 to-transparent dark:from-green-900/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86')] bg-cover bg-center opacity-20 dark:opacity-20" />
         <div className=' w-full m-10 absolute bg-transparent top-0'>
         <Navbar/>
         </div>
-        <div className="absolute inset-0 bg-gradient-radial from-green-100/50 to-transparent dark:from-green-900/30 pointer-events-none" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86')] bg-cover bg-center opacity-20 dark:opacity-20" />
-        
         <div className="relative text-center px-4 max-w-4xl mx-auto">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 mb-8 fade-up">
             <Globe className="h-4 w-4 mr-2" />
