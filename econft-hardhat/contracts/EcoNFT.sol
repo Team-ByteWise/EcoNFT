@@ -30,7 +30,7 @@ contract EcoNFT is ERC721URIStorage, Ownable {
         int256 latitude,
         int256 longitude
     ) public onlyOwner {
-        uint256 tokenId = _tokenIdCounter;
+        uint256 tokenId = _tokenIdCounter++;
         _safeMint(to, tokenId);
 
         treeDetails[tokenId] = TreeMetadata(
@@ -41,8 +41,6 @@ contract EcoNFT is ERC721URIStorage, Ownable {
             latitude,
             longitude
         );
-
-        _tokenIdCounter++;
     }
 
     function getTreeDetails(
