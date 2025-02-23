@@ -62,12 +62,6 @@ export default function Home() {
               <span className="absolute inset-0 rounded-full border-2 border-green-600 opacity-0 group-hover:opacity-100 transition-all duration-300" />
             </button>
             </Link>
-            <Link href={"/"}>
-            <button className="inline-flex items-center px-8 py-3 bg-white dark:bg-gray-800 text-green-900 dark:text-green-50 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 shadow-sm">
-              Learn More
-            </button>
-            </Link>
-            
           </div>
         </div>
 
