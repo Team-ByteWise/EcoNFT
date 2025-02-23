@@ -1,9 +1,4 @@
-"use client"
-import React, { useState } from 'react';
-import { Trees, X } from 'lucide-react';
-import NFTCard from './components/nftCard';
-import PurchaseModal from './components/Popup';
-
+"use client";
 
 import React, { useEffect, useState } from "react";
 import NFTCard from "./components/nftCard";
