@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { BASE_URL } from "@/lib/constant";
 import { useUser } from "@/app/context/AuthContext";
 
-const CONTRACT_ADDRESS = "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0";
+const CONTRACT_ADDRESS = "0x3A5b0569c1A9145189095AEb25eD761Ab541eC28";
 
 export default function Payment({ tree, onSuccess }: { tree: any; onSuccess: () => void }) {
   const { authToken } = useUser();
