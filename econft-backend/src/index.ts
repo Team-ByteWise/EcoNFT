@@ -4,6 +4,7 @@ import nftRoutes from "./routes/nft";
 import authRoutes from "./routes/auth"
 import orderRoutes from "./routes/order"
 import leaderboardRoutes from "./routes/leaderboard"
+import treeRoutes from "./routes/trees";
 import cors from "cors";
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/auth", authRoutes);
 app.use("/nft", nftRoutes);
 app.use("/order", orderRoutes);
 app.use("/leaderboard", leaderboardRoutes);
+app.use("/data", treeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
