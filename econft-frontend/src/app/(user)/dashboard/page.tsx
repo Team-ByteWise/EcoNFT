@@ -41,7 +41,7 @@ export default function Dashboard() {
   }, [authToken]);
 
   return (
-    <div className="min-w-full h-screen bg-green-950/30 py-8">
+    <div className="min-w-full min-h-screen py-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 mx-4">
           <h1 className="text-2xl font-bold  text-green-500 ">
