@@ -37,7 +37,7 @@ router.post("/", authenticate, async (req: Request, res: Response) => {
     return;
   }
 
-  prisma.transaction.create({
+  await prisma.transaction.create({
     data: {
       userId: req.body.user.id,
       amount: totalPrice,
