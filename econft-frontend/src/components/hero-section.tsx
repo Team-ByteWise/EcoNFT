@@ -55,7 +55,7 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center fade-up">
-            <Link href={"/create"}>
+            <Link href={"/login"}>
             <button className="group relative inline-flex items-center px-8 py-3 bg-green-700 text-white rounded-full hover:bg-green-700 transition-all duration-300 transform hover:scale-105">
               <Upload className="h-5 w-5 mr-2" />
               Start Planting
