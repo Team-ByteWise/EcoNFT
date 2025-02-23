@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const CONTRACT_ADDRESS = process.env.PAYMENT_CONTRACT_ADDRESS as string;
+const CONTRACT_ADDRESS = process.env.PAYMENT_CONTRACT_ADDRESS || "0x3A5b0569c1A9145189095AEb25eD761Ab541eC28";
 
 export default function Payment({ tree, onSuccess }: { tree: any; onSuccess: () => void }) {
   const { authToken } = useUser();
