@@ -6,6 +6,7 @@
     "lib": ["ESNext"],
     "skipLibCheck": true,
     "removeComments": true,
+    "allowJs": true,
 
     /* Paths */
     "rootDir": "./src",
@@ -14,9 +15,8 @@
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
     "noImplicitAny": true
   },
-  "include": ["src/**/*"],
+  "include": ["./src/**/*.ts"],
   "exclude": ["node_modules"]
 }

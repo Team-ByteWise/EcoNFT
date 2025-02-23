@@ -21,6 +21,16 @@ contract EcoNFT is ERC721URIStorage, Ownable {
         address initialOwner
     ) ERC721("EcoNFT", "ECONFT") Ownable(initialOwner) {}
 
+    event TreePlanted(
+        uint256 tokenId,
+        string plantName,
+        string scientificName,
+        string imageUrl,
+        string uuid,
+        int256 latitude,
+        int256 longitude
+    );
+
     function mintNFT(
         address to,
         string memory plantName,
@@ -41,6 +51,16 @@ contract EcoNFT is ERC721URIStorage, Ownable {
             latitude,
             longitude
         );
+
+        emit TreePlanted(
+            tokenId,
+            plantName,
+            scientificName,
+            imageUrl,
+            uuid,
+            latitude,
+            longitude
+        );
     }
 
     function getTreeDetails(
@@ -48,5 +68,39 @@ contract EcoNFT is ERC721URIStorage, Ownable {
     ) public view returns (TreeMetadata memory) {
         require(_ownerOf(tokenId) != address(0), "Token does not exist");
         return treeDetails[tokenId];
+    }
+
+    function getAllTreeDetails() public view returns (TreeMetadata[] memory) {
+        TreeMetadata[] memory allTrees = new TreeMetadata[](_tokenIdCounter);
+        for (uint256 i = 0; i < _tokenIdCounter; i++) {
+            allTrees[i] = treeDetails[i];
+        }
+        return allTrees;
+    }
+
+    // Get all NFTs owned by a specific wallet
+    function getAllNFTsByOwner(
+        address owner
+    ) public view returns (TreeMetadata[] memory) {
+        uint256 count = 0;
+
+        // First pass: Count how many NFTs the owner has
+        for (uint256 i = 0; i < _tokenIdCounter; i++) {
+            if (_ownerOf(i) == owner) {
+                count++;
+            }
+        }
+
+        // Second pass: Collect owner's NFTs
+        TreeMetadata[] memory ownedTrees = new TreeMetadata[](count);
+        uint256 index = 0;
+        for (uint256 i = 0; i < _tokenIdCounter; i++) {
+            if (_ownerOf(i) == owner) {
+                ownedTrees[index] = treeDetails[i];
+                index++;
+            }
+        }
+
+        return ownedTrees;
     }
 }

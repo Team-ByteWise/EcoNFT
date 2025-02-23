@@ -1,87 +1,65 @@
 "use client";
-import React, { FormEvent, FormEventHandler } from "react";
-import { useState } from "react";
+import { useAccount, useSignMessage } from "wagmi";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-const page = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { BASE_URL } from "@/lib/constant";
+
+export default function LoginPage() {
+  const { address, isConnected } = useAccount();
+  const { signMessageAsync } = useSignMessage();
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-
-    if (!email || !password) {
-      setError("Both fields are required");
-      return;
+  useEffect(() => {
+    if (isConnected && address) {
+      handleLogin();
     }
-  };
+  }, [isConnected, address]);
+
+  async function handleLogin() {
+    try {
+      setError("");
+      
+      // Request nonce from backend
+      const res = await fetch(BASE_URL + "/auth/request-nonce", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address }),
+      });
+
+      const { nonce } = await res.json();
+      
+      // Sign the nonce
+      const signature = await signMessageAsync({ message: nonce });
+
+      // Verify signature with backend
+      const authRes = await fetch(BASE_URL + "/auth/verify-signature", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address, signature }),
+      });
+
+      const { token } = await authRes.json();
+      localStorage.setItem("authToken", token);
+
+      // Redirect to dashboard or homepage
+      router.push("/dashboard");
+    } catch (err) {
+      console.error(err);
+      setError("Authentication failed. Please try again.");
+    }
+  }
 
   return (
-    <div className="flex h-screen bg-cover justify-center items-center w-screen ">
-      <div
-        className="hidden md:flex md:w-1/2 md:bg-cover md:bg-center md:bg-no-repeat h-screen opacity-50"
-        // style={{
-        //   backgroundImage: "url('/assets/lol.jpg')",
-        // }}
-      >
-        <Image
-          src="/assets/lol.jpg" // Path to your image (from public folder)
-          alt="Descriptive alt text"
-          width={300} // Width of the image
-          height={200} // Height of the image
-          className="rounded-lg shadow-lg w-full"
-        />
-      </div>
-
-      <div className="md:w-1/2 md:flex md:items-center md:justify-center ">
-        <div className=" p-8 rounded-2xl shadow-xl w-96 backdrop-blur-lg">
-          <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-4 flex flex-col gap-4"
-          >
-            <div>
-              <label className="block text-gray-700">Email</label>
-              <input
-                type="email"
-                className="w-full p-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 text-black "
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                className="w-full p-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 text-black"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-green-600 text-white p-2 rounded-full hover:bg-green-800 transition mt-10"
-            >
-              Login
-            </button>
-            <p className="text-center">
-              New to EcoNFT?{" "}
-              <Link href="/signup" className="text-green-700">
-                Create an Account
-              </Link>
-            </p>
-          </form>
+    <div className="flex h-screen justify-center items-center bg-green-950/30">
+      <div className="p-8 rounded-2xl shadow-xl w-96 backdrop-blur-lg bg-green-100">
+        <h2 className="text-2xl font-bold mb-6 text-center text-black">Login with Wallet</h2>
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        <div className="flex justify-center ">
+          <ConnectButton/>
         </div>
       </div>
     </div>
   );
-};
-
-export default page;
+}

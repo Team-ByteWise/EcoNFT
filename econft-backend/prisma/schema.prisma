@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+// User Model: Stores wallet address & username
+model User {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  wallet       String        @unique // Wallet address (primary identifier)
+  username     String?       @unique // Optional username
+  transactions Transaction[] @relation("UserTransactions")
+  Order        Order[]
+}
+
+// Transaction Model: Stores user transactions
+model Transaction {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  txHash    String   @unique // Unique transaction hash
+  amount    Float // ETH amount
+  treeId    String? // Optional Tree ID (if used for tree planting)
+  timestamp DateTime @default(now()) // Timestamp of transaction
+
+  user User @relation(fields: [userId], references: [id], name: "UserTransactions")
+}
+
+model Project {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  apiProjectId Int
+  name         String
+  description  String
+  latitude     Float
+  longitude    Float
+  minPrice     Float
+
+  trees Tree[]
+}
+
+model Tree {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  apiTreeId Int
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @db.ObjectId
+  name      String
+  price     Float
+  stock     Int     @default(0) @map("stock >= 0")
+
+  details TreeDetails?
+  orders  Order[]
+}
+
+model Category {
+  id    String        @id @default(auto()) @map("_id") @db.ObjectId
+  name  String        @unique
+  trees TreeDetails[]
+}
+
+model TreeDetails {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  tree            Tree     @relation(fields: [treeId], references: [id])
+  treeId          String   @unique @db.ObjectId
+  commonNames     String?
+  family          String?
+  particularities String?
+  planterLikes    String?
+  category        Category @relation(fields: [categoryId], references: [id])
+  categoryId      String   @db.ObjectId
+  foliageType     String?
+  height          String?
+  imageUrl        String?
+  lifeSpan        Int?
+  lifetimeCo2     Float?
+  co2Offset       Float?
+  co2OffsetPeriod String?
+}
+
+model Order {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String      @db.ObjectId
+  treeId     String      @db.ObjectId
+  quantity   Int
+  totalPrice Float
+  status     OrderStatus
+  date       DateTime    @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  tree Tree @relation(fields: [treeId], references: [id])
+}
