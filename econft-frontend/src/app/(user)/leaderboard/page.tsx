@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,54 +12,31 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Leaf, TreesIcon as Tree, Sprout } from "lucide-react";
 import UserProfile from "./UserProfile";
+import { BASE_URL } from "@/lib/constant";
 
-const users = [
-  {
-    rank: 1,
-    username: "EcoWarrior",
-    treeVariant: "Mighty Oak",
-    price: 0.5,
-    totalTrees: 1000,
-  },
-  {
-    rank: 2,
-    username: "GreenThumb",
-    treeVariant: "Tall Pine",
-    price: 0.4,
-    totalTrees: 850,
-  },
-  {
-    rank: 3,
-    username: "NatureLover",
-    treeVariant: "Young Sapling",
-    price: 0.3,
-    totalTrees: 700,
-  },
-  {
-    rank: 4,
-    username: "ForestFriend",
-    treeVariant: "Redwood",
-    price: 0.35,
-    totalTrees: 600,
-  },
-  {
-    rank: 5,
-    username: "TreeHugger",
-    treeVariant: "Maple",
-    price: 0.25,
-    totalTrees: 500,
-  },
-];
 type User = {
-  rank: number;
+  wallet: string;
   username: string;
-  treeVariant: string;
-  price: number;
-  totalTrees: number;
+  _count: {
+    transactions: number;
+  }
 };
 
 export default function Leaderboard() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetch(BASE_URL + "/leaderboard")
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.success) {
+          alert("Failed to fetch leaderboard");
+          return;
+        }
+        setUsers(data.leaderboard);
+      });
+  }, []);
 
   const getRankIcon = (rank: number) => {
     switch (rank) {
@@ -93,15 +70,15 @@ export default function Leaderboard() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
+            {users.map((user, index) => (
               <TableRow
-                key={user.rank}
-                className={user.rank <= 3 ? "bg-green-50 text-green-500 text-center " : "text-green-500 text-center "}
+                key={index}
+                className={index <= 2 ? "bg-green-50 text-green-500 text-center " : "text-green-500 text-center "}
               >
                 <TableCell className="font-medium  text-center flex items-center justify-center">
                   <div className="flex items-center gap-2 ">
-                    {getRankIcon(user.rank)}
-                    {user.rank}
+                    {getRankIcon(index + 1)}
+                    {index + 1}
                   </div>
                 </TableCell>
                 <TableCell>
@@ -121,7 +98,7 @@ export default function Leaderboard() {
                     variant="outline"
                     className="bg-green-100 text-green-800"
                   >
-                    {user.totalTrees}
+                    {user._count.transactions}
                   </Badge>
                 </TableCell>
               </TableRow>
@@ -129,12 +106,12 @@ export default function Leaderboard() {
           </TableBody>
         </Table>
       </div>
-      {selectedUser && (
+      {/* {selectedUser && (
         <UserProfile
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
         />
-      )}
+      )} */}
     </div>
   );
 }
