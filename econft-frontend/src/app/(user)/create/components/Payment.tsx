@@ -3,8 +3,11 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { BASE_URL } from "@/lib/constant";
 import { useUser } from "@/app/context/AuthContext";
+import dotenv from "dotenv";
 
-const CONTRACT_ADDRESS = "0x3A5b0569c1A9145189095AEb25eD761Ab541eC28";
+dotenv.config();
+
+const CONTRACT_ADDRESS = process.env.PAYMENT_CONTRACT_ADDRESS as string;
 
 export default function Payment({ tree, onSuccess }: { tree: any; onSuccess: () => void }) {
   const { authToken } = useUser();
