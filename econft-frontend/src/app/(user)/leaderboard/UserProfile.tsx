@@ -24,7 +24,7 @@ export default function UserProfile({ user, onClose }: UserProfileProps) {
       <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-green-600">
-            {user.username}'s Profile
+            {user.username}&apos;s Profile
           </DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-6">

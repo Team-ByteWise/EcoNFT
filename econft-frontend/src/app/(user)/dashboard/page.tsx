@@ -48,7 +48,7 @@ export default function Dashboard() {
             {/*user goes here*/}
             Welcome back, {username}!
           </h1>{" "}
-          <p className="text-gray-600">Here's your tree planting journey</p>
+          <p className="text-gray-600">Here&apos;s your tree planting journey</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mx-4">
