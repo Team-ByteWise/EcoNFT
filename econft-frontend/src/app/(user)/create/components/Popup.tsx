@@ -1,18 +1,18 @@
 import React from 'react'
 
-import { NFT } from '../page';
+import { Tree } from '../page';
 import { X } from 'lucide-react';
 export default function PurchaseModal({
-    nft,
+    tree,
     onClose,
     onConfirm,
   }: {
-    nft: NFT;
+    tree: Tree;
     onClose: () => void;
     onConfirm: () => void;
   }) {
     return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-2">
         <div className="bg-white rounded-2xl p-8 max-w-md w-full space-y-6 animate-fade-in relative">
           <button
             onClick={onClose}
@@ -24,17 +24,17 @@ export default function PurchaseModal({
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <img
-                src={nft.image}
-                alt={nft.title}
+                src={tree.details.imageUrl}
+                alt={tree.name}
                 className="w-20 h-20 rounded-lg object-cover"
               />
               <div>
-                <h3 className="font-semibold text-gray-900">{nft.title}</h3>
-                <p className="text-emerald-600 font-bold">{nft.price}</p>
+                <h3 className="font-semibold text-gray-900">{tree.name}</h3>
+                <p className="text-emerald-600 font-bold">{tree.price / 1e5} ETH</p>
               </div>
             </div>
             <p className="text-gray-600">
-              Are you sure you want to purchase this NFT?
+              Are you sure you want to purchase this tree?
             </p>
           </div>
           <div className="flex gap-4">

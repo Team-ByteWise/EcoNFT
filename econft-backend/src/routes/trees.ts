@@ -21,4 +21,19 @@ router.get("/trees/:treeId", async (req: Request, res: Response) => {
   res.json(tree);
 });
 
+router.get("/trees", async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
+  
+  const offset = (page - 1) * limit;
+  const trees = await prisma.tree.findMany({select: {
+    id: true,
+    name: true,
+    price: true,
+    details: true,
+    project: true
+  }});
+  res.json(trees.slice(offset, offset + limit));
+})
+
 export default router;
