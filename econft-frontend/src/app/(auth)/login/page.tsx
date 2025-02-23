@@ -20,7 +20,7 @@ export default function LoginPage() {
   async function handleLogin() {
     try {
       setError("");
-      
+
       // Request nonce from backend
       const res = await fetch(BASE_URL + "/auth/request-nonce", {
         method: "POST",
@@ -29,7 +29,7 @@ export default function LoginPage() {
       });
 
       const { nonce } = await res.json();
-      
+
       // Sign the nonce
       const signature = await signMessageAsync({ message: nonce });
 
@@ -43,8 +43,11 @@ export default function LoginPage() {
       const { token } = await authRes.json();
       localStorage.setItem("authToken", token);
 
-      // Redirect to dashboard or homepage
-      router.push("/dashboard");
+      setTimeout(() => {
+        // Redirect to dashboard or homepage
+        router.push("/dashboard");
+      }, 1500);
+
     } catch (err) {
       console.error(err);
       setError("Authentication failed. Please try again.");

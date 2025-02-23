@@ -5,69 +5,65 @@ import NFTCard from './components/nftCard';
 import PurchaseModal from './components/Popup';
 
 
-export type NFT = {
+import React, { useEffect, useState } from "react";
+import NFTCard from "./components/nftCard";
+import PurchaseModal from "./components/Popup";
+import { BASE_URL } from "@/lib/constant";
+import Payment from "./components/Payment"; // Import the Payment component
+
+export type Tree = {
   id: string;
-  title: string;
-  description: string;
-  price: string;
-  image: string;
+  name: string;
+  price: number;
+  details: {
+    commonNames: string;
+    family: string;
+    particularities: string;
+    imageUrl: string;
+    planterLikes: string;
+  };
 };
 
-const nfts: NFT[] = [
-  {
-    id: '1',
-    title: 'Oak Guardian #001',
-    description: 'A majestic oak NFT with unique traits, limited edition',
-    price: '0.05 ETH',
-    image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=400&h=400',
-  },
-  {
-    id: '2',
-    title: 'Pine Spirit #002',
-    description: 'Ancient pine tree spirit captured in digital form',
-    price: '0.08 ETH',
-    image: 'https://images.unsplash.com/photo-1503785640985-f62e3aeee448?auto=format&fit=crop&q=80&w=400&h=400',
-  },
-  {
-    id: '3',
-    title: 'Maple King #003',
-    description: 'Rare maple tree NFT with golden autumn leaves',
-    price: '0.12 ETH',
-    image: 'https://images.unsplash.com/photo-1507371341162-763b5e419408?auto=format&fit=crop&q=80&w=400&h=400',
-  },
-];
-
-
-
-
-
 function Page() {
-  const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
+  const [selectedNFT, setSelectedNFT] = useState<Tree | null>(null);
+  const [trees, setTrees] = useState<Tree[]>([]);
+  const [startPayment, setStartPayment] = useState(false);
 
-  const handleBuy = (nft: NFT) => {
+  useEffect(() => {
+    fetch(BASE_URL + "/data/trees")
+      .then((response) => response.json())
+      .then((data) => {
+        setTrees(data);
+      });
+  }, []);
+
+  const handleBuy = (nft: Tree) => {
     setSelectedNFT(nft);
+    setStartPayment(false); // Reset payment state
   };
 
   const handleConfirmPurchase = () => {
-    // Here you would handle the actual purchase logic
-    alert(`Purchase confirmed for ${selectedNFT?.title}!`);
-    setSelectedNFT(null);
+    setStartPayment(true); // Trigger Payment Component
   };
 
   return (
     <div className="min-h-screen bg-green-950/30">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {nfts.map((nft) => (
+          {trees.map((nft) => (
             <NFTCard key={nft.id} nft={nft} onBuy={handleBuy} />
           ))}
         </div>
       </main>
-      
-      {/* Purchase Modal */}
+
+      {/* Payment Component (Only when startPayment is true) */}
+      {startPayment && selectedNFT && (
+        <Payment tree={selectedNFT} onSuccess={() => setStartPayment(false)} />
+      )}
+
       {selectedNFT && (
         <PurchaseModal
-          nft={selectedNFT}
+          tree={selectedNFT}
           onClose={() => setSelectedNFT(null)}
           onConfirm={handleConfirmPurchase}
         />

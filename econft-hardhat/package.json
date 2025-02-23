@@ -14,5 +14,8 @@
       "keccak",
       "secp256k1"
     ]
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
   }
 }

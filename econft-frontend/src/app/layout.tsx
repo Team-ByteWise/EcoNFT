@@ -9,9 +9,8 @@ import { WagmiProvider } from "wagmi";
 import {
   mainnet,
   polygon,
-  optimism,
-  arbitrum,
-  base,
+  hardhat,
+  polygonAmoy
 } from 'wagmi/chains';
 import {
   QueryClientProvider,
@@ -22,7 +21,7 @@ import {
 const config = getDefaultConfig({
   appName: 'My RainbowKit App',
   projectId: 'YOUR_PROJECT_ID',
-  chains: [mainnet, polygon, optimism, arbitrum, base],
+  chains: [mainnet, polygon, hardhat, polygonAmoy],
   ssr: true, // If your dApp uses server side rendering (SSR)
 });
 

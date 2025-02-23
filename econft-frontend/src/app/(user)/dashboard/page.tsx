@@ -58,7 +58,7 @@ export default function Dashboard() {
                 <Trees className="w-6 h-6 text-green-600 " />
               </div>
               <div>
-                <div className="text-2xl font-bold text-gray-900">5</div>
+                <div className="text-2xl font-bold text-gray-900">{trees.length}</div>
                 <div className="text-sm text-gray-600">Trees Planted</div>
               </div>
             </div>
@@ -79,7 +79,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between mb-6 mx-4">
           <h2 className="text-xl font-semibold text-green-500">Your Trees</h2>
           <Link href="/create">
-            <button className="bg-green-100 p-3 rounded-xl hover:bg-green-200 text-green-500">
+            <button className="bg-green-100 p-3 rounded-xl hover:bg-green-200 text-green-900">
               Plant a Tree
             </button>
           </Link>
