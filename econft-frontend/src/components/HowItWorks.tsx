@@ -23,20 +23,20 @@ const HowItWorks = ({statsRef}: Props) => {
           <StepCard
             number="01"
             icon={<Tree />}
-            title="Plant a Tree"
-            description="Choose and plant a tree in your local area"
+            title="Buy a Tree"
+            description="Choose and buy a tree from our site"
           />
           <StepCard
             number="02"
             icon={<Upload />}
-            title="Upload Picture"
-            description="Take and upload a photo of your planted tree"
+            title="Plant the tree"
+            description="We ask Tree-Nation to plant the tree"
           />
           <StepCard
             number="03"
             icon={<Map />}
-            title="Mark Location"
-            description="Pin the exact location on our interactive map"
+            title="Get the plant details"
+            description="We get the plant details and make the NFT"
           />
           <StepCard
             number="04"
