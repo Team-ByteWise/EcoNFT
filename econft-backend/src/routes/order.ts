@@ -4,10 +4,11 @@ import { ethers } from "ethers";
 import { authenticate } from "../middlewares/auth";
 import { ecoNFTContract } from "../config/blockchain";
 import { v4 as uuidv4 } from 'uuid';
+import { env } from "../config/env";
 
 const router = express.Router();
 const prisma = new PrismaClient();
-const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+const provider = new ethers.JsonRpcProvider(env.blockchain.rpcUrl);
 
 router.post("/", authenticate, async (req: Request, res: Response) => {
   const { treeId, quantity, txHash } = req.body;

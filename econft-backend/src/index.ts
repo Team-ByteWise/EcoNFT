@@ -6,20 +6,34 @@ import orderRoutes from "./routes/order"
 import leaderboardRoutes from "./routes/leaderboard"
 import treeRoutes from "./routes/trees";
 import cors from "cors";
+import { env } from "./config/env";
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = env.port || 8000;
 
 app.use(morgan("dev"));
 
-app.use(cors(
-  {
-    origin: ["http://localhost:3000", "http://127.0.0.1:3000", "https://econft.itsyourap.tech", "http://econft.itsyourap.tech"],
-    credentials: true
+// CORS Middleware
+const allowedOrigins = env.isDev
+  ? (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (!origin || /^(http:\/\/localhost:\d+|http:\/\/127\.0\.0\.1:\d+)$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
   }
-));
+  : env.cors.origin;
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
 app.use(express.json());
+
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
+});
 
 app.get("/", (req: Request, res: Response) => {
   res.send(`Welcome to EcoNFT Backend Server!\nYou are ${req.headers["user-agent"]}`);

@@ -4,12 +4,11 @@ import { ethers } from "ethers";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { authenticate } from "../middlewares/auth";
+import { env } from "../config/env";
 
 dotenv.config();
 const router = express.Router();
 const prisma = new PrismaClient();
-
-const SECRET_KEY = process.env.JWT_SECRET || "supersecret";
 
 // Store nonces in memory (Use DB for production)
 const nonces: Record<string, string> = {};
@@ -52,7 +51,7 @@ router.post("/verify-signature", async (req: Request, res: Response) => {
     user = await prisma.user.create({ data: { wallet: address, username: address } });
   }
 
-  const token = jwt.sign({ id: user.id, wallet: user.wallet, username: user.username }, SECRET_KEY, { expiresIn: "7d" });
+  const token = jwt.sign({ id: user.id, wallet: user.wallet, username: user.username }, env.jwt.secret, { expiresIn: env.jwt.expiresIn });
   delete nonces[address]; // Remove used nonce
   res.json({ token });
 });
