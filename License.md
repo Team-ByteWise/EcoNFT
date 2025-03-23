@@ -1,4 +1,4 @@
-MIT License
+MIT LICENSE
 
 Copyright (c) 2024 Ankan Pal
 Permission is hereby granted, free of charge, to any person obtaining a copy
