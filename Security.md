@@ -9,7 +9,7 @@ Reporting a Vulnerability
 If you discover a security vulnerability in EcoNFT, we encourage you to report it as soon as possible. We will investigate all legitimate reports and do our best to quickly fix the issue.
 
 How to Report
-Please report vulnerabilities by emailing us at https://github.com/Team-ByteWise .Include as much detail as possible to help us identify and fix the issue swiftly.
+Please report vulnerabilities by  creating issues in the repository at https://github.com/Team-ByteWise .Include as much detail as possible to help us identify and fix the issue swiftly.
 Do not share the vulnerability publicly until it has been addressed and a patch is available.
 Security Updates
 We will notify users via GitHub releases for any critical security updates.
