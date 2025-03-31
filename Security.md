@@ -1,4 +1,4 @@
-## SECURITY POLICY
+Security Policy
 Supported Versions
 The following versions of EcoNFT are currently supported with security updates:
 
@@ -18,8 +18,7 @@ Minor security patches will be included in regular updates as needed.
 
 ## Security Best Practices
 Make sure to use the latest version of EcoNFT for the latest security features and patches.
-Make sure to that the users to keep their Private Keys / Passphrases safe
-
+Make sure to keep your wallet passphrases/private keys safe.
 Regularly update your dependencies to the latest versions.
 
 ## Acknowledgements
