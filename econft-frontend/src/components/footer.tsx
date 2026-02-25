@@ -39,9 +39,9 @@ const FooterComp = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
-                    Terms of Service
-                  </a>
+                    <a href="/terms-of-service" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
+                      Terms of Service
+                    </a>
                 </li>
               </ul>
             </div>
