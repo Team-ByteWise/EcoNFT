@@ -13,7 +13,7 @@ export default function UserLayout({
   return (
     <UserProvider>
       <UserFetch />
-      <div className="bg-green-950/70">
+      <div className="bg-green-950/70 dark:bg-green-950/90">
         <main className="pb-24">{children}</main>
         <Footer />
         <Navbar />

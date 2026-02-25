@@ -45,7 +45,7 @@ export default function Home() {
       <section ref={containerRef} className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
         {/* Background elements - keeping as requested */}
         <div className="absolute inset-0 bg-gradient-radial from-green-100/50 to-transparent dark:from-green-900/30 pointer-events-none" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86')] bg-cover bg-center opacity-20 dark:opacity-20" />
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86')] bg-cover bg-center opacity-10 dark:opacity-20" />
 
         {/* Digital grid overlay - adds futuristic element */}
         <div className="absolute inset-0 opacity-10">
@@ -91,13 +91,13 @@ export default function Home() {
           style={{ opacity, scale, y }}
         >
           <motion.div
-            className="inline-flex items-center px-4 py-2 rounded-full bg-green-100/10 backdrop-blur-md border border-green-500/30 text-green-400 mb-8"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-green-100/30 dark:bg-green-100/10 backdrop-blur-md border border-green-500/30 text-green-700 dark:text-green-400 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
             <Globe className="h-4 w-4 mr-2" />
-            Join 5,000+ eco-warriors worldwide
+            <span className="text-green-700 dark:text-green-400">Join 5,000+ eco-warriors worldwide</span>
           </motion.div>
 
           <motion.h1
@@ -106,7 +106,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <span className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Turn Your Trees into</span>
+            <span className="text-gray-900 dark:text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Turn Your Trees into</span>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
               {' '}Digital Assets
             </span>
@@ -121,9 +121,9 @@ export default function Home() {
               <div className="relative overflow-hidden rounded-xl">
                 <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-green-900/60 backdrop-blur-md"></div>
                 <div className="relative z-10 p-6">
-                  <p className="text-xl text-white">
+                  <p className="text-xl text-white dark:text-white">
                     <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-emerald-200">Join the green revolution.</span><br/>
-                    <span className="text-gray-100">Plant trees, capture their growth, and earn unique NFTs while contributing to a sustainable future.</span>
+                    <span className="text-gray-100 dark:text-gray-100">Plant trees, capture their growth, and earn unique NFTs while contributing to a sustainable future.</span>
                   </p>
                 </div>
 
@@ -181,7 +181,7 @@ export default function Home() {
 
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-green-900/20 to-black/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-green-900/20 to-black/80 dark:from-black/80 dark:via-green-900/20 dark:to-black/80"></div>
           {[...Array(20)].map((_, i) => (
             <div
               key={`h-${i}`}

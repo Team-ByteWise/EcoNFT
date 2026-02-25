@@ -52,15 +52,15 @@ export default function Leaderboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-950/40 to-green-950/30 p-8">
-      <div className="w-11/12 mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="bg-green-600 p-6 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-green-950/40 to-green-950/30 dark:from-green-950/60 dark:to-green-950/50 p-8">
+      <div className="w-11/12 mx-auto bg-white dark:bg-green-900/40 rounded-lg shadow-lg dark:shadow-green-900/20 overflow-hidden dark:border dark:border-green-800/50">
+        <div className="bg-green-600 dark:bg-green-700 p-6 text-white">
           <h1 className="text-3xl font-bold text-center">
             Tree Planting Leaderboard
           </h1>
         </div>
         <Table className="w-full table-fixed">
-          <TableHeader className="text-green-900">
+          <TableHeader className="text-green-900 dark:text-green-300">
             <TableRow>
               <TableHead className="w-1/3 text-center">Rank</TableHead>
               <TableHead className="w-1/3 text-center">Username</TableHead>
@@ -73,7 +73,7 @@ export default function Leaderboard() {
             {users.map((user, index) => (
               <TableRow
                 key={index}
-                className={index <= 2 ? "bg-green-50 text-green-500 text-center " : "text-green-500 text-center "}
+                className={index <= 2 ? "bg-green-50 dark:bg-green-900/30 text-green-500 text-center " : "text-green-500 text-center "}
               >
                 <TableCell className="font-medium  text-center flex items-center justify-center">
                   <div className="flex items-center gap-2 ">
@@ -84,7 +84,7 @@ export default function Leaderboard() {
                 <TableCell>
                   <button
                     // onClick={() => setSelectedUser(user)}
-                    className="text-green-600 hover:text-green-800 font-medium text-center"
+                    className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-center"
                   >
                     {user.username}
                   </button>
@@ -96,7 +96,7 @@ export default function Leaderboard() {
                 <TableCell>
                   <Badge
                     variant="outline"
-                    className="bg-green-100 text-green-800"
+                    className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300"
                   >
                     {user._count.transactions}
                   </Badge>

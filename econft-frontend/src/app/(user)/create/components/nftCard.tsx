@@ -4,15 +4,15 @@ import { Tree } from '../page';
 
 export default function NFTCard({ nft, onBuy }: { nft: Tree; onBuy: (nft: Tree) => void }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-4px]">
+    <div className="bg-white dark:bg-green-900/40 dark:border dark:border-green-800/50 rounded-2xl shadow-lg dark:shadow-green-900/20 overflow-hidden transition-transform hover:translate-y-[-4px]">
       <img
         src={nft.details.imageUrl}
         alt={nft.name}
         className="w-full h-48 object-cover"
       />
       <div className="p-6 space-y-4">
-        <h3 className="text-xl font-bold text-gray-900">{nft.details.commonNames.split(",")[0]}</h3>
-        <p className="text-gray-600">{nft.details.planterLikes.split(".")[0]}</p>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">{nft.details.commonNames.split(",")[0]}</h3>
+        <p className="text-gray-600 dark:text-gray-400">{nft.details.planterLikes.split(".")[0]}</p>
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-emerald-600">{nft.price / 1e5} ETH</span>
           <button

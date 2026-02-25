@@ -8,7 +8,7 @@ interface Props {
 
 const HowItWorks = ({ statsRef }: Props) => {
   return (
-    <div className="bg-gradient-to-b from-green-950 to-green-900 py-20 px-10 relative overflow-hidden">
+    <div className="bg-gradient-to-b from-green-100 to-green-50 dark:from-green-950 dark:to-green-900 py-20 px-10 relative overflow-hidden">
       {/* Subtle background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-green-400 blur-3xl"></div>
@@ -20,7 +20,7 @@ const HowItWorks = ({ statsRef }: Props) => {
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300 mb-4">
             How It Works
           </h2>
-          <p className="text-gray-100 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Join our mission to create a greener planet in four simple steps
           </p>
         </div>
