@@ -1,5 +1,6 @@
 import { Leaf } from 'lucide-react'
 import React from 'react'
+import Link from 'next/link';
 
 const FooterComp = () => {
   return (
@@ -34,9 +35,9 @@ const FooterComp = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
+                  <Link href="/contact" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
                     Contact
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
