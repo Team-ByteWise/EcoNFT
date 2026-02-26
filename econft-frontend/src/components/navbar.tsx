@@ -18,6 +18,7 @@ const Navbar = () => {
     { path: '/', label: 'Home', icon: Home },
     { path: '#how-it-works', label: 'How', icon: Info },
     { path: '#stats', label: 'Impact', icon: Leaf },
+    { path: '/contact', label: 'Contact', icon: Info },
     { path: '/login', label: 'Login', icon: LogIn },
   ];
 
