@@ -30,7 +30,7 @@ const FooterComp = () => {
               </h3>
               <ul className="mt-4 space-y-2">
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
+                  <a href="/about" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
                     About
                   </a>
                 </li>
