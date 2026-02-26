@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Trophy, LayoutDashboard, PlusCircle } from 'lucide-react';
+import { Home, Trophy, LayoutDashboard, PlusCircle, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/app/context/ThemeContext';
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     setIsVisible(true);
@@ -33,6 +35,18 @@ const Navbar = () => {
         {/* Subtle glow behind the navbar */}
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-green-500/5 to-emerald-500/10 pointer-events-none" />
 
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          className="relative flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-300 text-white/50 hover:text-white/90 hover:bg-white/10"
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
+
+        {/* Divider */}
+        <div className="w-px h-8 bg-white/10 mr-1" />
+
         {navLinks.map((link) => {
           const isActive = pathname === link.path;
           const Icon = link.icon;
@@ -45,7 +59,7 @@ const Navbar = () => {
                          transition-all duration-300 group min-w-[60px] sm:min-w-[72px]
                          ${isActive
                            ? 'text-emerald-300'
-                           : 'text-white/50 hover:text-white/90'}`}
+                           : 'text-white/50 hover:text-emerald-300 hover:bg-emerald-500/10 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:-translate-y-0.5'}`}
             >
               {/* Active indicator background */}
               {isActive && (

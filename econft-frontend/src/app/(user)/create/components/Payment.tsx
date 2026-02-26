@@ -37,7 +37,7 @@ export default function Payment({ tree, onSuccess }: { tree: any; onSuccess: () 
         })
       }).then(async (res: any) => {
         const data = await res.json();
-        
+
         if (data.success !== undefined && !data.success) {
           alert(data.error);
         } else {
@@ -56,7 +56,7 @@ export default function Payment({ tree, onSuccess }: { tree: any; onSuccess: () 
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg z-60 text-black">
+      <div className="bg-white dark:bg-green-900/90 dark:border dark:border-green-800/50 p-6 rounded-lg shadow-lg z-60 text-black dark:text-white">
         <h2 className="text-xl font-bold mb-4">Confirm Payment</h2>
         <p>Buying: {tree.name}</p>
         <p>Price: {tree.price / 1e5} ETH</p>

@@ -55,9 +55,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex h-screen justify-center items-center bg-green-950/30">
-      <div className="p-8 rounded-2xl shadow-xl w-96 backdrop-blur-lg bg-green-100">
-        <h2 className="text-2xl font-bold mb-6 text-center text-black">Login with Wallet</h2>
+    <div className="flex h-screen justify-center items-center bg-green-950/30 dark:bg-green-950/60">
+      <div className="p-8 rounded-2xl shadow-xl w-96 backdrop-blur-lg bg-green-100 dark:bg-green-900/50 dark:border dark:border-green-800/50">
+        <h2 className="text-2xl font-bold mb-6 text-center text-black dark:text-white">Login with Wallet</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <div className="flex justify-center ">
           <ConnectButton/>
