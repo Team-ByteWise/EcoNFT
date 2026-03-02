@@ -1,46 +1,135 @@
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
-const TermsOfService = () => (
-  <div className="max-w-3xl mx-auto py-12 px-4 text-gray-100">
-    <Link href="/" className="inline-block mb-6 px-4 py-2 bg-green-800 text-green-200 rounded hover:bg-green-700 transition-colors">
-      &larr; Back to Home
-    </Link>
-    <h1 className="text-3xl font-bold mb-6 text-green-300">Terms of Service</h1>
-    <p className="mb-4">Welcome to econfT! By accessing or using our platform, you agree to comply with and be bound by the following Terms of Service. Please read them carefully.</p>
+const sectionVariant = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" },
+  }),
+};
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">1. Acceptance of Terms</h2>
-    <p className="mb-4">By using econfT, you agree to these Terms of Service and our Privacy Policy. If you do not agree, please do not use our services.</p>
+const TermsOfService = () => {
+  const sections = [
+    {
+      title: "1. Acceptance of Terms",
+      content:
+        "By using econfT, you agree to these Terms of Service and our Privacy Policy. If you do not agree, please discontinue use immediately.",
+    },
+    {
+      title: "2. Use of the Platform",
+      list: [
+        "You must be at least 18 years old or have guardian consent.",
+        "You agree not to use the platform for unlawful activities.",
+        "Digital assets (EcoNFTs) are subject to blockchain risks such as volatility and regulatory changes.",
+      ],
+    },
+    {
+      title: "3. Intellectual Property",
+      content:
+        "All platform content including software, branding, graphics, and databases belong to econfT or its licensors. Unauthorized reproduction or redistribution is prohibited.",
+    },
+    {
+      title: "4. User Conduct",
+      list: [
+        "No unauthorized system access attempts.",
+        "No harassment, abuse, or harmful behavior.",
+        "No malicious software uploads or distribution.",
+      ],
+    },
+    {
+      title: "5. Limitation of Liability",
+      content:
+        "econfT shall not be liable for any direct or indirect damages resulting from the use of the platform. All transactions are conducted at your own risk.",
+    },
+    {
+      title: "6. Changes to Terms",
+      content:
+        "We reserve the right to update these terms at any time. Continued usage after updates implies acceptance.",
+    },
+    {
+      title: "7. Contact",
+      content:
+        "For any questions regarding these Terms, please contact us through the links provided in the footer.",
+    },
+  ];
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">2. Use of the Platform</h2>
-    <ul className="list-disc ml-6 mb-4">
-      <li>You must be at least 18 years old or have legal parental or guardian consent to use this platform.</li>
-      <li>You agree not to use the platform for any unlawful or prohibited activities.</li>
-      <li>All digital assets (EcoNFTs) are subject to blockchain technology and may be subject to risks including loss of access, volatility, and regulatory changes.</li>
-    </ul>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-emerald-950 to-black text-gray-200 px-6 py-16">
+      <div className="max-w-4xl mx-auto">
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">3. Intellectual Property</h2>
-    <p className="mb-4">All content, trademarks, and data on this platform, including but not limited to software, databases, text, graphics, icons, and hyperlinks are the property of econfT or its licensors. You may not reproduce, distribute, or create derivative works without explicit permission.</p>
+        {/* Back Button */}
+        <Link
+          href="/"
+          className="inline-block mb-10 px-6 py-2 rounded-full border border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-black transition-all duration-300 shadow-md hover:shadow-emerald-500/40"
+        >
+          ← Back to Home
+        </Link>
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">4. User Conduct</h2>
-    <ul className="list-disc ml-6 mb-4">
-      <li>Do not attempt to gain unauthorized access to any part of the platform or its systems.</li>
-      <li>Do not use the platform to harass, abuse, or harm others.</li>
-      <li>Do not upload or distribute malicious software or content.</li>
-    </ul>
+        {/* Main Card */}
+        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-10 shadow-2xl">
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">5. Limitation of Liability</h2>
-    <p className="mb-4">econfT is not liable for any direct, indirect, incidental, or consequential damages resulting from your use of the platform or any digital assets. All transactions are at your own risk.</p>
+          {/* Title */}
+          <h1 className="text-4xl font-bold text-emerald-400 mb-6 tracking-wide">
+            Terms of Service
+          </h1>
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">6. Changes to Terms</h2>
-    <p className="mb-4">We reserve the right to update or modify these Terms of Service at any time. Continued use of the platform after changes constitutes acceptance of the new terms.</p>
+          <p className="text-gray-400 mb-10 leading-relaxed">
+            Welcome to <span className="text-emerald-300 font-semibold">econfT</span>.
+            By accessing or using our platform, you agree to comply with and be
+            bound by the following terms. Please read them carefully before
+            proceeding.
+          </p>
 
-    <h2 className="text-xl font-semibold mt-8 mb-2 text-green-200">7. Contact</h2>
-    <p className="mb-4">If you have any questions about these Terms of Service, please contact us via the links provided in the footer.</p>
+          {/* Sections */}
+          <div className="space-y-8">
+            {sections.map((section, index) => (
+              <motion.div
+                key={index}
+                custom={index}
+                initial="hidden"
+                animate="visible"
+                variants={sectionVariant}
+                className="group p-6 rounded-2xl border border-white/10 hover:border-emerald-500 transition-all duration-300 bg-white/5 hover:bg-emerald-500/5"
+              >
+                <h2 className="text-xl font-semibold text-emerald-300 group-hover:text-emerald-400 transition-colors duration-300">
+                  {section.title}
+                </h2>
 
-    <p className="mt-8 text-sm text-gray-400">&copy; 2025 econfT. All rights reserved.</p>
-  </div>
-);
+                {section.content && (
+                  <p className="mt-3 text-gray-400 leading-relaxed">
+                    {section.content}
+                  </p>
+                )}
+
+                {section.list && (
+                  <ul className="mt-3 list-disc ml-6 space-y-2 text-gray-400">
+                    {section.list.map((item, i) => (
+                      <li
+                        key={i}
+                        className="hover:text-emerald-300 transition-colors duration-200"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div className="mt-12 pt-6 border-t border-white/10 text-sm text-gray-500 text-center">
+            © 2025 <span className="text-emerald-400">econfT</span>. All rights reserved.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default TermsOfService;
