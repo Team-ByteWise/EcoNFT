@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Trees as Tree, Upload, Map, Coins, ChevronDown, Globe, Users, Leaf } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import HowItWorks from './HowItWorks';
+import FAQSection from './FAQSection';
 import Stats from './stats';
 import Link from 'next/link';
 import CTA from './CTA';
@@ -161,13 +162,15 @@ export default function Home() {
         </motion.button>
       </section>
 
+
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
       >
-        <HowItWorks statsRef={statsRef}/>
+        <HowItWorks statsRef={statsRef} />
+        <FAQSection />
       </motion.div>
 
       <motion.div

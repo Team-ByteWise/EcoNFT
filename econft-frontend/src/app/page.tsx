@@ -1,12 +1,17 @@
 "use client"
 
-import  HeroSection  from "@/components/hero-section"
-function HeroSectionDemo() {
+
+import HeroSection from "@/components/hero-section";
+import FAQSection from "@/components/FAQSection";
+
+function HomePage() {
   return (
     <>
-    <HeroSection/>
+      <HeroSection />
+      <FAQSection />
     </>
-  )
+  );
 }
-export default HeroSectionDemo 
+
+export default HomePage;
 
