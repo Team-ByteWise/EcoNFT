@@ -7,17 +7,48 @@ import { Home, LogIn, Leaf, Info, Sun, Moon } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "@/app/context/ThemeContext";
 
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
+
+    if (typeof window !== "undefined" && window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_accounts" })
+        .then((accounts: string[]) => {
+          if (accounts.length > 0) {
+            setWalletAddress(accounts[0]);
+          }
+        });
+    }
   }, []);
 
+  const connectWallet = async () => {
+    if (typeof window !== "undefined" && window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        setWalletAddress(accounts[0]);
+      } catch (error) {
+        console.error("Wallet connection failed", error);
+      }
+    } else {
+      alert("Please install MetaMask");
+    }
+  };
+
   // 🔥 Scroll handler
-  const handleScroll = (id) => {
+const handleScroll = (id: string) => {
     if (pathname !== "/") {
       window.location.href = `/#${id}`;
     } else {
@@ -42,10 +73,11 @@ const Navbar = () => {
       className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out
       ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}
     >
-      <div className="relative flex items-center gap-2 px-6 py-3 rounded-2xl
+      <div
+        className="relative flex items-center gap-2 px-6 py-3 rounded-2xl
       bg-white/80 dark:bg-white/[0.06] backdrop-blur-xl border border-gray-200 dark:border-white/[0.12]
-      shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-
+      shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+      >
         {/* Glow */}
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-green-500/5 to-emerald-500/10 pointer-events-none" />
 
@@ -105,9 +137,11 @@ const Navbar = () => {
               key={link.label}
               href={link.path}
               className={`flex flex-col items-center px-4 py-2 rounded-xl transition group
-              ${isLogin
-                ? "text-emerald-600 dark:text-emerald-300 bg-emerald-500/15 border border-emerald-400/20"
-                : "text-gray-600 dark:text-white/50 hover:text-emerald-500 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"}`}
+              ${
+                isLogin
+                  ? "text-emerald-600 dark:text-emerald-300 bg-emerald-500/15 border border-emerald-400/20"
+                  : "text-gray-600 dark:text-white/50 hover:text-emerald-500 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
+              }`}
             >
               <Icon className="w-5 h-5 group-hover:scale-110 transition" />
               <span className="text-xs mt-1 opacity-70 group-hover:opacity-100">
@@ -116,6 +150,25 @@ const Navbar = () => {
             </Link>
           );
         })}
+        {/* Wallet Status */}
+        <div className="ml-3">
+          {walletAddress ? (
+            <button
+              onClick={() => setWalletAddress(null)}
+              className="px-3 py-1 text-xs rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-300"
+            >
+              {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)} |
+              Disconnect
+            </button>
+          ) : (
+            <button
+              onClick={connectWallet}
+              className="px-3 py-1 text-xs rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-300"
+            >
+              Connect Wallet
+            </button>
+          )}
+        </div>
       </div>
     </nav>
   );
