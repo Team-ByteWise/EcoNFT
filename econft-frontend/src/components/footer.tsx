@@ -66,6 +66,11 @@ const FooterComp = () => {
                     GitHub
                   </a>
                 </li>
+                  <li>
+                    <Link href="/privacy-policy" className="text-gray-300 hover:text-green-400 transition-colors duration-200">
+                      Privacy Policy
+                    </Link>
+                  </li>
               </ul>
             </div>
           </div>
